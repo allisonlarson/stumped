@@ -1,30 +1,39 @@
 import React from 'react';
+import Question from './question';
 import { StyleSheet, Text, View, Button, Alert } from 'react-native';
 
 export default class App extends React.Component {
   constructor(props) {
     super(props)
     this.state = {
-      text: "stumped",
-      buttonText: "Get Started"
+      isPlaying: false
     }
+    this.handleOnPress = this.handleOnPress.bind(this)
   }
 
   handleOnPress() {
-    this.setState({ text: "Whats your favorite color?", buttonText: "Answer" });
+    this.setState({ isPlaying: true })
   }
 
   render() {
     return (
       <View style={styles.container}>
-        <Text style={styles.welcomeHeader}>{ this.state.text }</Text>
+        { this.state.isPlaying ? (
+          <Question />
+          ) : (
+          <View>
+            <Text style={styles.welcomeHeader}>stumped</Text>
 
-        <Button
-          title={ this.state.buttonText }
-          color='black'
-          onPress={this.handleOnPress.bind(this)}
-        />
-      </View>
+            <Button
+              title="Get Started"
+              color='black'
+              onPress={this.handleOnPress}
+            />
+          </View>
+
+          )}
+
+        </View>
     );
   }
 }
