@@ -5,19 +5,57 @@ export default class Question extends React.Component {
   constructor(props) {
     super(props)
     this.state = {
-      showAnswer: false
+      question: "",
+      answer: "",
+      showAnswer: false,
+      isLoading: true
     }
+    this.fetchQuestion = this.fetchQuestion.bind(this)
     this.handleOnPress = this.handleOnPress.bind(this)
   }
 
+  componentDidMount() {
+    this.fetchQuestion()
+  }
+
+  fetchQuestion() {
+    this.resetQuestion()
+    return fetch('http://jservice.io/api/random', {
+      method: 'GET',
+    })
+    .then((response) => response.json())
+    .then((data) => {
+      this.setState({
+        question: data[0].question,
+        answer: data[0].answer,
+        isLoading:false })
+    })
+    .catch((error) => console.error(error))
+  }
+
   handleOnPress() {
-    this.setState({ showAnswer: !this.state.showAnswer })
+    this.setState({ showAnswer: true })
+  }
+
+  resetQuestion() {
+    this.setState({
+      question: "",
+      answer: "",
+      showAnswer: false,
+      isLoading: true
+    })
   }
 
   render() {
     return (
       <View>
-        <Text style={styles.question}>Here is the question</Text>
+        <Button
+          title="Next"
+          disabled={this.state.isLoading}
+          color='black'
+          onPress={this.fetchQuestion}
+        />
+        <Text style={styles.question}>{this.state.question}</Text>
         <Button
           title="Answer"
           color='black'
@@ -25,7 +63,7 @@ export default class Question extends React.Component {
         />
         { this.state.showAnswer &&
           <View>
-            <Text style={styles.answer}>Answer</Text>
+            <Text style={styles.answer}>{this.state.answer}</Text>
           </View>
         }
       </View>
