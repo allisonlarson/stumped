@@ -2,20 +2,27 @@ import React from 'react';
 import { StyleSheet, Text, View, Button, Alert } from 'react-native';
 
 export default class App extends React.Component {
-  onPressStartButton() {
-    Alert.alert('We are going to start the game!');
+  constructor(props) {
+    super(props)
+    this.state = {
+      text: "stumped",
+      buttonText: "Get Started"
+    }
+  }
+
+  handleOnPress() {
+    this.setState({ text: "Whats your favorite color?", buttonText: "Answer" });
   }
 
   render() {
     return (
       <View style={styles.container}>
-        <Text style={styles.welcomeHeader}> Stumped </Text>
+        <Text style={styles.welcomeHeader}>{ this.state.text }</Text>
 
         <Button
-          title="Get Started"
+          title={ this.state.buttonText }
           color='black'
-          accessibilityLabel="Start the game"
-          onPress={this.onPressStartButton}
+          onPress={this.handleOnPress.bind(this)}
         />
       </View>
     );
@@ -34,3 +41,4 @@ const styles = StyleSheet.create({
     fontSize: 100
   },
 });
+
