@@ -1,5 +1,8 @@
 {
   "expo": {
-    "sdkVersion": "15.0.0"
+    "name": "stumped",
+    "description": "a tiny trivia app",
+    "sdkVersion": "15.0.0",
+    "orientation": "portrait"
   }
 }
