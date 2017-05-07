@@ -34,7 +34,7 @@ export default class Question extends React.Component {
   }
 
   handleOnPress() {
-    this.setState({ showAnswer: true })
+    this.setState({ showAnswer: !this.state.showAnswer })
   }
 
   resetQuestion() {
