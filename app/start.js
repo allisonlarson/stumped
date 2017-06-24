@@ -9,30 +9,34 @@ export default class Start extends React.Component {
       isPlaying: false
     }
     this.handleOnPress = this.handleOnPress.bind(this)
+    this.startGameOver = this.startGameOver.bind(this)
   }
 
   handleOnPress() {
     this.setState({ isPlaying: true })
   }
 
+  startGameOver() {
+    this.setState({ isPlaying: false })
+  }
+
   render() {
     return (
       <View style={styles.container}>
         { this.state.isPlaying ? (
-          <Question />
+          <Question
+            startOver={this.startGameOver}
+          />
           ) : (
           <View>
             <Text style={styles.welcomeHeader}>stumped</Text>
-
             <Button
               title="Get Started"
               color='black'
               onPress={this.handleOnPress}
             />
           </View>
-
           )}
-
         </View>
     );
   }
@@ -41,9 +45,9 @@ export default class Start extends React.Component {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+    flexDirection: 'column',
     backgroundColor: '#b22222',
-    alignItems: 'center',
-    justifyContent: 'center',
+    justifyContent: 'center'
   },
   welcomeHeader: {
     color: 'white',

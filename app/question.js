@@ -12,6 +12,7 @@ export default class Question extends React.Component {
     }
     this.fetchQuestion = this.fetchQuestion.bind(this)
     this.handleOnPress = this.handleOnPress.bind(this)
+    this.handleOnStartOverPress = this.handleOnStartOverPress.bind(this)
   }
 
   componentDidMount() {
@@ -37,6 +38,10 @@ export default class Question extends React.Component {
     this.setState({ showAnswer: !this.state.showAnswer })
   }
 
+  handleOnStartOverPress() {
+    this.props.startOver()
+  }
+
   resetQuestion() {
     this.setState({
       question: "",
@@ -48,14 +53,16 @@ export default class Question extends React.Component {
 
   render() {
     return (
-      <View>
+      <View style={styles.container}>
         <Button
           title="Next"
           disabled={this.state.isLoading}
           color='black'
           onPress={this.fetchQuestion}
         />
-        <Text style={styles.question}>{this.state.question}</Text>
+        <View>
+          <Text style={styles.question}>{this.state.question}</Text>
+        </View>
         <Button
           title="Answer"
           color='black'
@@ -66,12 +73,22 @@ export default class Question extends React.Component {
             <Text style={styles.answer}>{this.state.answer}</Text>
           </View>
         }
+        <Button
+          title="Start Over"
+          color='black'
+          onPress={this.handleOnStartOverPress}
+        />
       </View>
     )
   }
 }
 
 const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    flexDirection: 'column',
+    justifyContent: 'space-around'
+  },
   question: {
     color: 'white',
     fontSize: 50
